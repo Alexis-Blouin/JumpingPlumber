@@ -133,9 +133,10 @@ GameObject:
   - component: {fileID: 20516452}
   - component: {fileID: 20516457}
   - component: {fileID: 20516456}
-  m_Layer: 0
+  - component: {fileID: 20516458}
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -365,6 +366,20 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &20516458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20516451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368a36213010ada4c9890285b15e5108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  health: 5
+  invulnarabilityTime: 2
 --- !u!1 &222827687
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +527,28 @@ CompositeCollider2D:
         Y: 9666666
       - X: 299666656
         Y: 9666666
+    - - X: 100333336
+        Y: -19666666
+      - X: 100333336
+        Y: 9666667
+      - X: 99666672
+        Y: 10333333
+      - X: 90333328
+        Y: 10333333
+      - X: 89666664
+        Y: 9666667
+      - X: 89666664
+        Y: 333333
+      - X: 30333334
+        Y: 333333
+      - X: 29666666
+        Y: -333333
+      - X: 29666666
+        Y: -19666666
+      - X: 30333334
+        Y: -20333334
+      - X: 99666672
+        Y: -20333334
     - - X: 220333328
         Y: -19666666
       - X: 220333328
@@ -539,22 +576,6 @@ CompositeCollider2D:
       - X: 150333328
         Y: -20333334
       - X: 219666672
-        Y: -20333334
-    - - X: 100333336
-        Y: -19666666
-      - X: 100333336
-        Y: -333333
-      - X: 99666672
-        Y: 333333
-      - X: 30333334
-        Y: 333333
-      - X: 29666666
-        Y: -333333
-      - X: 29666666
-        Y: -19666666
-      - X: 30333334
-        Y: -20333334
-      - X: 99666672
         Y: -20333334
     - - X: 10333333
         Y: -29666666
@@ -625,8 +646,11 @@ CompositeCollider2D:
       - {x: 15.033344, y: -2.0333335}
     - - {x: 9.966656, y: -2.0333335}
       - {x: 10.033334, y: -1.9666559}
-      - {x: 10.033326, y: -0.033325702}
-      - {x: 9.966656, y: 0.0333333}
+      - {x: 10.033326, y: 0.9666743}
+      - {x: 9.966656, y: 1.0333333}
+      - {x: 9.033325, y: 1.0333257}
+      - {x: 8.966666, y: 0.9666559}
+      - {x: 8.966637, y: 0.0333333}
       - {x: 3.033326, y: 0.033325702}
       - {x: 2.9666667, y: -0.0333441}
       - {x: 2.9666743, y: -1.9666742}
@@ -1286,7 +1310,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1487,6 +1511,16 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 2
       m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 9, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1748,16 +1782,16 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 97
+  - m_RefCount: 98
     m_Data: {fileID: 11400000, guid: 9e7b99a14b977c24b99d3a4056fad463, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {fileID: 4564998844612868550, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {fileID: -22804317248558295, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: -8276140089702118719, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: 57347999071926559, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
   - m_RefCount: 27
     m_Data: {fileID: 6623730380747189143, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
@@ -1782,7 +1816,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: -4336983083204144081, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 97
+  - m_RefCount: 98
     m_Data:
       e00: 1
       e01: 0
@@ -1801,7 +1835,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 97
+  - m_RefCount: 98
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -2474,16 +2508,6 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741826
-  - first: {x: 9, y: -1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
       m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
@@ -2550,6 +2574,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 9, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
   - first: {x: 15, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -2659,13 +2693,13 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 4
     m_Data: {fileID: -824844684304707806, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
-  - m_RefCount: 19
+  - m_RefCount: 18
     m_Data: {fileID: 8639387614241938782, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: -2366211932132140173, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 8930182985808030838, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
-  - m_RefCount: 4
+  - m_RefCount: 5
     m_Data: {fileID: 2872756571348975794, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 33
@@ -2726,9 +2760,9 @@ GameObject:
   - component: {fileID: 1038884333}
   - component: {fileID: 1038884332}
   - component: {fileID: 1038884336}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2892,6 +2926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 5
+  damage: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
