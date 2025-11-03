@@ -27,14 +27,6 @@ public class PlayerHealth : MonoBehaviour
         StartCoroutine(BecomeInvulnerable());
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            // TODO handle when the player jumps on top of the head of the enemy
-        }
-    }
-
     private IEnumerator BecomeInvulnerable()
     {
         _isInvulnerable = true;

@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private int damage = 1;
@@ -12,6 +12,13 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D _boxCollider;
 
     private short _direction = 1;
+    
+    public abstract void JumpedOn();
+
+    public int GetDamage()
+    {
+        return damage;
+    }
     
     void Start()
     {
@@ -63,14 +70,5 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         _rb.linearVelocity = new Vector2(_direction * speed, _rb.linearVelocity.y);
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
-            playerHealth.TakeDamage(damage);
-        }
     }
 }

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float jumpForce = 5.0f;
+    [SerializeField] private float jumpForceEnemy = 2.0f;
     [SerializeField] private LayerMask groundLayer;
     
     private Rigidbody2D _rb;
@@ -56,5 +57,29 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         _rb.linearVelocity = new Vector2(_moveInput * speed, _rb.linearVelocity.y);
+    }
+    
+    
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            // Gets the first contact
+            ContactPoint2D contact = other.contacts[0];
+
+            Debug.Log("Contact normal: " + contact.normal);
+            if (contact.normal.y > 0.5f)
+            {
+                enemy.JumpedOn();
+                
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForceEnemy);
+            }
+            else
+            {
+                PlayerHealth playerHealth = gameObject.GetComponent<PlayerHealth>();
+                playerHealth.TakeDamage(enemy.GetDamage());
+            }
+        }
     }
 }
