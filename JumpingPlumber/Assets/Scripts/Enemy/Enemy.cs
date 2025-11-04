@@ -15,6 +15,8 @@ public abstract class Enemy : MonoBehaviour
     protected bool _isMoving = true;
     protected float _deathDownForce = 500.0f;
     protected float _deathBoxColliderHeight;
+    
+    private SpriteRenderer _spriteRenderer;
 
     private short _direction = 1;
     
@@ -27,6 +29,7 @@ public abstract class Enemy : MonoBehaviour
     
     protected void Initialize()
     {
+        _spriteRenderer =  GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
@@ -53,7 +56,7 @@ public abstract class Enemy : MonoBehaviour
             
             if (hitRight)
             {
-                _direction = -1;
+                ChangeDirection();
             }
         }
         else
@@ -68,9 +71,15 @@ public abstract class Enemy : MonoBehaviour
             
             if (hitLeft)
             {
-                _direction = 1;
+                ChangeDirection();
             }
         }
+    }
+
+    private void ChangeDirection()
+    {
+        _direction = (short)-_direction;
+        _spriteRenderer.flipX = !_spriteRenderer.flipX;
     }
 
     private void FixedUpdate()

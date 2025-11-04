@@ -13,10 +13,12 @@ public class Player : MonoBehaviour
     [SerializeField] private int health = 5;
     [SerializeField] private float invulnarabilityTime = 2.0f;
     
+    private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb;
     private BoxCollider2D _boxCollider;
     private Animator _animator;
     private float _moveInput;
+    private bool _goingRight = true;
     private Vector2 _velocity;
 
     private bool _isGrounded;
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
     
     void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
@@ -39,6 +42,19 @@ public class Player : MonoBehaviour
     {
         _moveInput = context.ReadValue<float>();
         _animator.SetBool("IsMoving", _moveInput is > 0 or < 0);
+        if (_moveInput != 0.0f)
+        {
+            if (_goingRight && _moveInput < 0.0f)
+            {
+                _spriteRenderer.flipX = true;
+                _goingRight = false;
+            }
+            else if (!_goingRight && _moveInput > 0.0f)
+            {
+                _spriteRenderer.flipX = false;
+                _goingRight = true;
+            }
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -80,7 +96,6 @@ public class Player : MonoBehaviour
             // Gets the first contact
             ContactPoint2D contact = other.contacts[0];
 
-            Debug.Log("Contact normal: " + contact.normal);
             if (contact.normal.y > 0.5f)
             {
                 enemy.JumpedOn();
@@ -107,17 +122,13 @@ public class Player : MonoBehaviour
     private IEnumerator BecomeInvulnerable()
     {
         _isInvulnerable = true;
-        
         // Ignore collisions between player and enemy layer
         Physics2D.IgnoreLayerCollision(_playerLayer, _enemyLayer, true);
-        Debug.Log("Player is invulnerable!");
         
         yield return new WaitForSeconds(invulnarabilityTime);
         
         // Re-enable collisions
         Physics2D.IgnoreLayerCollision(_playerLayer, _enemyLayer, false);
         _isInvulnerable = false;
-        
-        Debug.Log("Player is vulnerable again!");
     }
 }
