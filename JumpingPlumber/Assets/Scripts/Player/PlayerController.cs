@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     
     private Rigidbody2D _rb;
     private BoxCollider2D _boxCollider;
+    private Animator _animator;
     private float _moveInput;
     private Vector2 _velocity;
 
@@ -20,11 +21,13 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<float>();
+        _animator.SetBool("IsMoving", _moveInput is > 0 or < 0);
     }
 
     public void OnJump(InputAction.CallbackContext context)

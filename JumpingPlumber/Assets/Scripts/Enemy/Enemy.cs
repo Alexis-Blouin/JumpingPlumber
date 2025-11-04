@@ -10,6 +10,7 @@ public abstract class Enemy : MonoBehaviour
     
     private Rigidbody2D _rb;
     private BoxCollider2D _boxCollider;
+    protected Animator _animator;
 
     private short _direction = 1;
     
@@ -24,6 +25,7 @@ public abstract class Enemy : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
