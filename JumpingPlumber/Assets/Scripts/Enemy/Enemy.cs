@@ -8,9 +8,13 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private LayerMask groundLayer;
     
-    private Rigidbody2D _rb;
-    private BoxCollider2D _boxCollider;
+    protected Rigidbody2D _rb;
+    protected BoxCollider2D _boxCollider;
     protected Animator _animator;
+
+    protected bool _isMoving = true;
+    protected float _deathDownForce = 500.0f;
+    protected float _deathBoxColliderHeight;
 
     private short _direction = 1;
     
@@ -21,7 +25,7 @@ public abstract class Enemy : MonoBehaviour
         return damage;
     }
     
-    void Start()
+    protected void Initialize()
     {
         _rb = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
@@ -71,6 +75,9 @@ public abstract class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.linearVelocity = new Vector2(_direction * speed, _rb.linearVelocity.y);
+        if (_isMoving)
+        {
+            _rb.linearVelocity = new Vector2(_direction * speed, _rb.linearVelocity.y);
+        }
     }
 }
