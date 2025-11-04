@@ -11,7 +11,6 @@ public class Turt : Enemy
     public override void JumpedOn()
     {
         _animator.SetTrigger("Die");
-        Debug.Log("Turt transforms in shell");
         _isMoving = false;
         // Adjusts the collider size to fit the sprite
         _boxCollider.size = new Vector2(_boxCollider.size.x, _deathBoxColliderHeight);

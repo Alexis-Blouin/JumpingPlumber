@@ -1,13 +1,17 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float jumpForceEnemy = 2.0f;
     [SerializeField] private LayerMask groundLayer;
+    
+    [SerializeField] private int health = 5;
+    [SerializeField] private float invulnarabilityTime = 2.0f;
     
     private Rigidbody2D _rb;
     private BoxCollider2D _boxCollider;
@@ -16,12 +20,19 @@ public class PlayerController : MonoBehaviour
     private Vector2 _velocity;
 
     private bool _isGrounded;
+
+    private int _playerLayer;
+    private int _enemyLayer;
+    private bool _isInvulnerable = false;
     
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
+        
+        _playerLayer = LayerMask.NameToLayer("Player");
+        _enemyLayer = LayerMask.NameToLayer("Enemy");
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -61,8 +72,6 @@ public class PlayerController : MonoBehaviour
     {
         _rb.linearVelocity = new Vector2(_moveInput * speed, _rb.linearVelocity.y);
     }
-    
-    
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -80,9 +89,35 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                PlayerHealth playerHealth = gameObject.GetComponent<PlayerHealth>();
-                playerHealth.TakeDamage(enemy.GetDamage());
+                TakeDamage(enemy.GetDamage());
             }
         }
+    }
+    
+    public void TakeDamage(int damage)
+    {
+        if (_isInvulnerable) return;
+        
+        health -= damage;
+        Debug.Log("ouch: " + health);
+        
+        StartCoroutine(BecomeInvulnerable());
+    }
+
+    private IEnumerator BecomeInvulnerable()
+    {
+        _isInvulnerable = true;
+        
+        // Ignore collisions between player and enemy layer
+        Physics2D.IgnoreLayerCollision(_playerLayer, _enemyLayer, true);
+        Debug.Log("Player is invulnerable!");
+        
+        yield return new WaitForSeconds(invulnarabilityTime);
+        
+        // Re-enable collisions
+        Physics2D.IgnoreLayerCollision(_playerLayer, _enemyLayer, false);
+        _isInvulnerable = false;
+        
+        Debug.Log("Player is vulnerable again!");
     }
 }
