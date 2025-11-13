@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     private Vector2 _velocity;
 
     private bool _isBig = false;
+    private float _smallBoxColliderHeight = 1.0f;
+    protected float _shrinkDownForce = 500.0f;
+    private float _bigBoxColliderHeight = 2.0f;
     private bool _isGrounded;
 
     private int _playerLayer;
@@ -150,12 +153,16 @@ public class Player : MonoBehaviour
     {
         _isBig = true;
         _animator.SetBool("IsBig", _isBig);
+        _boxCollider.size = new Vector2(_boxCollider.size.x, _bigBoxColliderHeight);
     }
 
     private void _Shrink()
     {
         _isBig = false;
         _animator.SetBool("IsBig", _isBig);
+        _boxCollider.size = new Vector2(_boxCollider.size.x, _smallBoxColliderHeight);
+        // Push the Player to the ground after making it slimer 
+        _rb.AddForce(Vector2.down * _shrinkDownForce);
     }
 
     private IEnumerator BecomeInvulnerable()
