@@ -21,8 +21,9 @@ public class Player : MonoBehaviour
     private Vector2 _velocity;
 
     private bool _isBig = false;
+    private bool _isFire = false;
     private float _smallBoxColliderHeight = 1.0f;
-    protected float _shrinkDownForce = 500.0f;
+    private float _shrinkDownForce = 500.0f;
     private float _bigBoxColliderHeight = 2.0f;
     private bool _isGrounded;
 
@@ -70,9 +71,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnFireball(InputAction.CallbackContext context)
+    {
+        if (_isFire && context.started)
+        {
+            Debug.Log("Fireball");
+        }
+    }
+
     private void Update()
     {
-        float distance = 0.1f;
+        float distance = 0.1f * _boxCollider.bounds.size.y;
         float angle = 0.0f;
         float castSize = 0.9f;
         
@@ -121,6 +130,10 @@ public class Player : MonoBehaviour
 
                 case ItemType.HealthMushroom:
                     break;
+                
+                case ItemType.FireFlower:
+                    _AddFire();
+                    break;
 
                 case ItemType.Star:
                     break;
@@ -137,7 +150,11 @@ public class Player : MonoBehaviour
     {
         if (_isInvulnerable) return;
 
-        if (_isBig)
+        if (_isFire)
+        {
+            _RemoveFire();
+        }
+        else if (_isBig)
         {
             _Shrink();
         }
@@ -163,6 +180,18 @@ public class Player : MonoBehaviour
         _boxCollider.size = new Vector2(_boxCollider.size.x, _smallBoxColliderHeight);
         // Push the Player to the ground after making it slimer 
         _rb.AddForce(Vector2.down * _shrinkDownForce);
+    }
+
+    private void _AddFire()
+    {
+        _isFire = true;
+        _animator.SetBool("IsFire", _isFire);
+    }
+
+    private void _RemoveFire()
+    {
+        _isFire = false;
+        _animator.SetBool("IsFire", _isFire);
     }
 
     private IEnumerator BecomeInvulnerable()

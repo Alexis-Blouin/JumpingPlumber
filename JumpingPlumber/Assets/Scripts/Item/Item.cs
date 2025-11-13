@@ -4,6 +4,7 @@ public enum ItemType
 {
     GrowMushroom,
     HealthMushroom,
+    FireFlower,
     Star,
     Coin
 }
@@ -14,11 +15,10 @@ public class Item : MonoBehaviour
     
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private bool isMoving = true;
     
-    protected Rigidbody2D _rb;
-    protected BoxCollider2D _boxCollider;
-    
-    protected bool _isMoving = true;
+    private Rigidbody2D _rb;
+    private BoxCollider2D _boxCollider;
     
     private SpriteRenderer _spriteRenderer;
     
@@ -80,7 +80,7 @@ public class Item : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isMoving)
+        if (isMoving)
         {
             _rb.linearVelocity = new Vector2(_direction * speed, _rb.linearVelocity.y);
         }
