@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForceEnemy = 2.0f;
     [SerializeField] private LayerMask groundLayer;
     
-    [SerializeField] private int health = 5;
     [SerializeField] private float invulnarabilityTime = 2.0f;
     
     private SpriteRenderer _spriteRenderer;
@@ -21,6 +20,7 @@ public class Player : MonoBehaviour
     private bool _goingRight = true;
     private Vector2 _velocity;
 
+    private bool _isBig = false;
     private bool _isGrounded;
 
     private int _playerLayer;
@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
             _isGrounded = false;
+            _animator.SetBool("IsJumping", !_isGrounded);
         }
     }
 
@@ -82,6 +83,7 @@ public class Player : MonoBehaviour
 
         // Implicit conversion from RaycastHit2D to bool
         _isGrounded = hit;
+        _animator.SetBool("IsJumping", !_isGrounded);
     }
 
     private void FixedUpdate()
@@ -104,19 +106,56 @@ public class Player : MonoBehaviour
             }
             else
             {
-                TakeDamage(enemy.GetDamage());
+                GetHit();
             }
+        } else if (other.gameObject.TryGetComponent<Item>(out Item item))
+        {
+            switch (item.type)
+            {
+                case ItemType.GrowMushroom:
+                    _Grow();
+                    break;
+
+                case ItemType.HealthMushroom:
+                    break;
+
+                case ItemType.Star:
+                    break;
+                
+                case ItemType.Coin:
+                    break;
+            }
+            
+            Destroy(other.gameObject); // Destroy the item after the player used it
         }
     }
     
-    public void TakeDamage(int damage)
+    public void GetHit()
     {
         if (_isInvulnerable) return;
-        
-        health -= damage;
-        Debug.Log("ouch: " + health);
+
+        if (_isBig)
+        {
+            _Shrink();
+        }
+        else
+        {
+            // Die
+        }
         
         StartCoroutine(BecomeInvulnerable());
+    }
+
+    private void _Grow()
+    {
+        _isBig = true;
+        _animator.SetBool("IsBig", _isBig);
+    }
+
+    private void _Shrink()
+    {
+        _isBig = false;
+        _animator.SetBool("IsBig", _isBig);
     }
 
     private IEnumerator BecomeInvulnerable()
