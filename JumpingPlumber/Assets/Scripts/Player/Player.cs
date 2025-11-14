@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     
     [SerializeField] private float invulnarabilityTime = 2.0f;
+
+    [SerializeField] private GameObject fireball;
     
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb;
@@ -76,6 +78,10 @@ public class Player : MonoBehaviour
         if (_isFire && context.started)
         {
             Debug.Log("Fireball");
+            short direction = (short)(_spriteRenderer.flipX ? -1 : 1);
+            Vector3 position = new Vector3(transform.position.x + direction, transform.position.y, transform.position.z);
+            GameObject fb = Instantiate(fireball, position, Quaternion.identity);
+            fb.GetComponent<Fireball>().SetDirection(direction);
         }
     }
 
