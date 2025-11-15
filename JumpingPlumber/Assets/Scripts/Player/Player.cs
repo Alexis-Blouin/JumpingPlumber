@@ -77,7 +77,6 @@ public class Player : MonoBehaviour
     {
         if (_isFire && context.started)
         {
-            Debug.Log("Fireball");
             short direction = (short)(_spriteRenderer.flipX ? -1 : 1);
             Vector3 position = new Vector3(transform.position.x + direction, transform.position.y, transform.position.z);
             GameObject fb = Instantiate(fireball, position, Quaternion.identity);
