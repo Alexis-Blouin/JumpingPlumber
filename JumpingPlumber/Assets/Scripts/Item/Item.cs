@@ -3,7 +3,7 @@ using UnityEngine;
 public enum ItemType
 {
     GrowMushroom,
-    HealthMushroom,
+    LifeMushroom,
     FireFlower,
     Star,
     Coin

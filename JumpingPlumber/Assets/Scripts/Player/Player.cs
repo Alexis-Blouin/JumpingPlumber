@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
@@ -9,10 +10,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float jumpForceEnemy = 2.0f;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask brickLayer;
     
     [SerializeField] private float invulnarabilityTime = 2.0f;
 
-    [SerializeField] private GameObject fireball;
+    [SerializeField] private GameObject fireballPrefab;
     
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb;
@@ -79,8 +81,8 @@ public class Player : MonoBehaviour
         {
             short direction = (short)(_spriteRenderer.flipX ? -1 : 1);
             Vector3 position = new Vector3(transform.position.x + direction, transform.position.y, transform.position.z);
-            GameObject fb = Instantiate(fireball, position, Quaternion.identity);
-            fb.GetComponent<Fireball>().SetDirection(direction);
+            GameObject fireball = Instantiate(fireballPrefab, position, Quaternion.identity);
+            fireball.GetComponent<Fireball>().SetDirection(direction);
         }
     }
 
@@ -101,6 +103,8 @@ public class Player : MonoBehaviour
         // Implicit conversion from RaycastHit2D to bool
         _isGrounded = hit;
         _animator.SetBool("IsJumping", !_isGrounded);
+
+        _CheckHeadHit();
     }
 
     private void FixedUpdate()
@@ -133,7 +137,7 @@ public class Player : MonoBehaviour
                     _Grow();
                     break;
 
-                case ItemType.HealthMushroom:
+                case ItemType.LifeMushroom:
                     break;
                 
                 case ItemType.FireFlower:
@@ -148,6 +152,41 @@ public class Player : MonoBehaviour
             }
             
             Destroy(other.gameObject); // Destroy the item after the player used it
+        }
+    }
+
+    private void _CheckHeadHit()
+    {
+        float distance = 0.1f * _boxCollider.bounds.size.y;
+        float angle = 0.0f;
+        float castSize = 0.9f;
+        
+        RaycastHit2D hit = Physics2D.BoxCast(
+            _boxCollider.bounds.center,
+            _boxCollider.bounds.size * castSize,
+            angle,
+            Vector2.up,
+            distance,
+            brickLayer
+        );
+
+        if (hit.collider != null)
+        {
+            Tilemap tilemap = hit.collider.GetComponent<Tilemap>();
+            
+            if (tilemap != null)
+            {
+                Vector3 hitPos = (Vector3)hit.point + Vector3.up * distance;
+                Vector3Int cellPos = tilemap.WorldToCell(hitPos);
+                
+                TileBase tile = tilemap.GetTile(new Vector3Int(-18, -1, 0));
+            
+                Debug.Log(tile);
+                if (tile is BrickTile brick)
+                {
+                    brick.OnHit(cellPos, tilemap);
+                }
+            }
         }
     }
     
