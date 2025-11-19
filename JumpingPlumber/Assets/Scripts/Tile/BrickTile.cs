@@ -8,6 +8,7 @@ public class BrickTile : Tile
     {
         GrowMushroom,
         LifeMushroom,
+        FireFlower,
         Star,
         Coin,
         Breakable,
@@ -15,8 +16,9 @@ public class BrickTile : Tile
     }
 
     public Type type = Type.Unbreakable;
-    public Sprite usedSprite;
+    public Tile usedTile;
     public GameObject itemPrefab;
+    public uint numberOfActivation = 1;
 
     // Function similar to Start function for GameObjects
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
@@ -27,17 +29,50 @@ public class BrickTile : Tile
 
     public void OnHit(Vector3Int cellPos, Tilemap tilemap)
     {
+        Vector3 worldPosition = new Vector3();
+        Vector3 position = new Vector3();
         switch (type)
         {
             case Type.GrowMushroom:
                 Debug.Log("Growing mushroom");
-                Vector3 worldPosition = tilemap.CellToWorld(cellPos);
-                Vector3 position = new Vector3(worldPosition.x, worldPosition.y + 0.5f, worldPosition.z);
+                worldPosition = tilemap.CellToWorld(cellPos);
+                position = new Vector3(worldPosition.x, worldPosition.y + 1.5f, worldPosition.z);
+                Debug.Log("Mush position: " + position);
                 Instantiate(itemPrefab, position, Quaternion.identity);
+
+                // --numberOfActivation;
+                // if (numberOfActivation == 0)
+                // {
+                tilemap.SetTile(cellPos, usedTile);
+                // }
                 break;
             
             case Type.LifeMushroom:
                 Debug.Log("Life mushroom");
+                worldPosition = tilemap.CellToWorld(cellPos);
+                position = new Vector3(worldPosition.x, worldPosition.y + 1.5f, worldPosition.z);
+                Debug.Log("Mush position: " + position);
+                Instantiate(itemPrefab, position, Quaternion.identity);
+
+                // --numberOfActivation;
+                // if (numberOfActivation == 0)
+                // {
+                tilemap.SetTile(cellPos, usedTile);
+                // }
+                break;
+            
+            case Type.FireFlower:
+                Debug.Log("Fire flower");
+                worldPosition = tilemap.CellToWorld(cellPos);
+                position = new Vector3(worldPosition.x + 0.5f, worldPosition.y + 1.5f, worldPosition.z);
+                Debug.Log("Flower position: " + position);
+                Instantiate(itemPrefab, position, Quaternion.identity);
+
+                // --numberOfActivation;
+                // if (numberOfActivation == 0)
+                // {
+                tilemap.SetTile(cellPos, usedTile);
+                // }
                 break;
             
             case Type.Star:
@@ -46,6 +81,13 @@ public class BrickTile : Tile
             
             case Type.Coin:
                 Debug.Log("Coin");
+
+                --numberOfActivation;
+                if (numberOfActivation == 0)
+                {
+                    tilemap.SetTile(cellPos, usedTile);
+                }
+                
                 break;
             
             case Type.Breakable:

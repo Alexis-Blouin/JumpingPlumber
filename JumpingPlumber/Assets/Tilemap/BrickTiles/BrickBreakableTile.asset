@@ -34,6 +34,7 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  type: 4
-  usedSprite: {fileID: 0}
+  type: 5
+  usedTile: {fileID: 0}
   itemPrefab: {fileID: 0}
+  numberOfActivation: 1

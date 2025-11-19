@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
             angle,
             Vector2.down,
             distance,
-            groundLayer);
+            groundLayer|brickLayer);
 
         // Implicit conversion from RaycastHit2D to bool
         _isGrounded = hit;
@@ -177,14 +177,16 @@ public class Player : MonoBehaviour
             if (tilemap != null)
             {
                 Vector3 hitPos = (Vector3)hit.point + Vector3.up * distance;
+                Debug.Log("hit pos: " + hitPos);
                 Vector3Int cellPos = tilemap.WorldToCell(hitPos);
                 
-                TileBase tile = tilemap.GetTile(new Vector3Int(-18, -1, 0));
+                TileBase tile = tilemap.GetTile(cellPos);
             
                 Debug.Log(tile);
                 if (tile is BrickTile brick)
                 {
                     brick.OnHit(cellPos, tilemap);
+                    _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0.0f);
                 }
             }
         }

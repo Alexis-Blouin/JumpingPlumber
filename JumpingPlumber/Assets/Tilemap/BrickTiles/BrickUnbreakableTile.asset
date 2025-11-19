@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dac71e6d08d8cd24fb31234d195d969e, type: 3}
-  m_Name: BrickGrowTile
+  m_Name: BrickUnbreakableTile
   m_EditorClassIdentifier: Assembly-CSharp::BrickTile
-  m_Sprite: {fileID: 7810949417647135802, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
+  m_Sprite: {fileID: 3019534828987350327, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -34,7 +34,7 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  type: 0
-  usedTile: {fileID: 11400000, guid: 79a34c5efeb61b247a89006c4d2c085f, type: 2}
-  itemPrefab: {fileID: 2972407020908136976, guid: 822d673aeb7003a439139c801f93099a, type: 3}
+  type: 6
+  usedTile: {fileID: 0}
+  itemPrefab: {fileID: 0}
   numberOfActivation: 1
