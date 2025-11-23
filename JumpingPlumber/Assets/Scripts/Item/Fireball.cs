@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Fireball : MonoBehaviour
@@ -46,7 +47,7 @@ public class Fireball : MonoBehaviour
             
             if (hitRight)
             {
-                HitWall();
+                Explode();
             }
         }
         else
@@ -61,7 +62,7 @@ public class Fireball : MonoBehaviour
             
             if (hitLeft)
             {
-                HitWall();
+                Explode();
             }
         }
 
@@ -87,7 +88,16 @@ public class Fireball : MonoBehaviour
         }
     }
 
-    private void HitWall()
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            enemy.Burn();
+            Explode();
+        }
+    }
+
+    private void Explode()
     {
         isMoving = false;
         _animator.SetTrigger("Explode");
@@ -100,6 +110,9 @@ public class Fireball : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.linearVelocity = new Vector2(_direction * speed, _rb.linearVelocity.y);
+        if (isMoving)
+        {
+            _rb.linearVelocity = new Vector2(_direction * speed, _rb.linearVelocity.y);
+        }
     }
 }

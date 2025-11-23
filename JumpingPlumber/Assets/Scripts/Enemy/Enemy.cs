@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -88,5 +89,22 @@ public abstract class Enemy : MonoBehaviour
         {
             _rb.linearVelocity = new Vector2(_direction * speed, _rb.linearVelocity.y);
         }
+    }
+    
+    
+    
+    public void Burn()
+    {
+        _animator.SetTrigger("Die");
+        _isMoving = false;
+        _rb.linearVelocity = new Vector2(0.0f, _rb.linearVelocity.y);
+        _rb.freezeRotation = false;
+        _rb.angularVelocity = Random.Range(-600f, 600f);
+        // Adjusts the collider size to fit the sprite
+        _boxCollider.size = new Vector2(_boxCollider.size.x, _deathBoxColliderHeight);
+        _boxCollider.isTrigger = true;
+        // Push the Enemy upward a little before going down
+        _rb.AddForce(Vector2.up * 10.0f);
+        Destroy(gameObject, 5.0f);
     }
 }

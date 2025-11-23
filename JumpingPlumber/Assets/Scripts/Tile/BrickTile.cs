@@ -23,7 +23,7 @@ public class BrickTile : Tile
     // Function similar to Start function for GameObjects
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
-        Debug.Log(type.ToString() + " Position: " + position);
+        // Debug.Log(type.ToString() + " Position: " + position);
         return false;
     }
 
@@ -34,10 +34,8 @@ public class BrickTile : Tile
         switch (type)
         {
             case Type.GrowMushroom:
-                Debug.Log("Growing mushroom");
                 worldPosition = tilemap.CellToWorld(cellPos);
                 position = new Vector3(worldPosition.x, worldPosition.y + 1.5f, worldPosition.z);
-                Debug.Log("Mush position: " + position);
                 Instantiate(itemPrefab, position, Quaternion.identity);
 
                 // --numberOfActivation;
@@ -48,10 +46,8 @@ public class BrickTile : Tile
                 break;
             
             case Type.LifeMushroom:
-                Debug.Log("Life mushroom");
                 worldPosition = tilemap.CellToWorld(cellPos);
                 position = new Vector3(worldPosition.x, worldPosition.y + 1.5f, worldPosition.z);
-                Debug.Log("Mush position: " + position);
                 Instantiate(itemPrefab, position, Quaternion.identity);
 
                 // --numberOfActivation;
@@ -62,10 +58,8 @@ public class BrickTile : Tile
                 break;
             
             case Type.FireFlower:
-                Debug.Log("Fire flower");
                 worldPosition = tilemap.CellToWorld(cellPos);
                 position = new Vector3(worldPosition.x + 0.5f, worldPosition.y + 1.5f, worldPosition.z);
-                Debug.Log("Flower position: " + position);
                 Instantiate(itemPrefab, position, Quaternion.identity);
 
                 // --numberOfActivation;
@@ -76,12 +70,9 @@ public class BrickTile : Tile
                 break;
             
             case Type.Star:
-                Debug.Log("Star");
                 break;
             
             case Type.Coin:
-                Debug.Log("Coin");
-
                 --numberOfActivation;
                 if (numberOfActivation == 0)
                 {
@@ -91,12 +82,10 @@ public class BrickTile : Tile
                 break;
             
             case Type.Breakable:
-                Debug.Log("Breakable");
                 tilemap.SetTile(cellPos, null);
                 break;
             
             case Type.Unbreakable:
-                Debug.Log("Unbreakable");
                 break;
         }
     }
