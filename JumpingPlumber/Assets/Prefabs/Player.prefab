@@ -105,7 +105,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6eb750a0c102e5f4aaf3d7847db73381, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -183,11 +183,16 @@ MonoBehaviour:
   speed: 8
   jumpForce: 16
   jumpForceEnemy: 8
+  jumpForceDead: 12
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  brickLayer:
+    serializedVersion: 2
+    m_Bits: 512
   invulnarabilityTime: 2
-  fireball: {fileID: 7639788394541132412, guid: 2560a883f1dfa3941a07a5671a999eaa, type: 3}
+  fireballPrefab: {fileID: 7639788394541132412, guid: 2560a883f1dfa3941a07a5671a999eaa, type: 3}
+  visualTilemap: {fileID: 0}
 --- !u!114 &709885376514105773
 MonoBehaviour:
   m_ObjectHideFlags: 0

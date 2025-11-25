@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float jumpForceEnemy = 2.0f;
+    [SerializeField] private float jumpForceDead = 4.0f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask brickLayer;
     
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
 
     private bool _isBig = false;
     private bool _isFire = false;
+    private bool _isAlive = true;
     private float _smallBoxColliderHeight = 1.0f;
     private float _shrinkDownForce = 500.0f;
     private float _bigBoxColliderHeight = 2.0f;
@@ -52,7 +54,7 @@ public class Player : MonoBehaviour
     {
         _moveInput = context.ReadValue<float>();
         _animator.SetBool("IsMoving", _moveInput is > 0 or < 0);
-        if (_moveInput != 0.0f)
+        if (_moveInput != 0.0f && _isAlive)
         {
             if (_goingRight && _moveInput < 0.0f)
             {
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (_isGrounded)
+        if (_isGrounded && _isAlive)
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
             _isGrounded = false;
@@ -111,7 +113,10 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.linearVelocity = new Vector2(_moveInput * speed, _rb.linearVelocity.y);
+        if (_isAlive)
+        {
+            _rb.linearVelocity = new Vector2(_moveInput * speed, _rb.linearVelocity.y);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -208,7 +213,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            // Die
+            _Die();
         }
         
         StartCoroutine(BecomeInvulnerable());
@@ -228,6 +233,17 @@ public class Player : MonoBehaviour
         _boxCollider.size = new Vector2(_boxCollider.size.x, _smallBoxColliderHeight);
         // Push the Player to the ground after making it slimer 
         _rb.AddForce(Vector2.down * _shrinkDownForce);
+    }
+
+    private void _Die()
+    {
+        _isAlive = false;
+        _animator.SetTrigger("Die");
+        _boxCollider.enabled = false;
+        // Stop any possible horizontal movement
+        _rb.linearVelocity = new Vector2(0.0f, jumpForceDead);
+        
+        // TODO Pause the enemies and other stuff when he dies
     }
 
     private void _AddFire()
