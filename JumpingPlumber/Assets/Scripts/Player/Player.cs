@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     private int _enemyLayer;
     private bool _isInvulnerable = false;
     
+    public Tilemap visualTilemap;
+    
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -185,7 +187,7 @@ public class Player : MonoBehaviour
                 Debug.Log(tile);
                 if (tile is BrickTile brick)
                 {
-                    brick.OnHit(cellPos, tilemap);
+                    brick.OnHit(cellPos, tilemap, visualTilemap);
                     _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0.0f);
                 }
             }

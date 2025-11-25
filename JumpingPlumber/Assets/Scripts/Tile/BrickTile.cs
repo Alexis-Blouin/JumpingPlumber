@@ -27,7 +27,7 @@ public class BrickTile : Tile
         return false;
     }
 
-    public void OnHit(Vector3Int cellPos, Tilemap tilemap)
+    public void OnHit(Vector3Int cellPos, Tilemap tilemap, Tilemap visualTilemap)
     {
         Vector3 worldPosition = new Vector3();
         Vector3 position = new Vector3();
@@ -41,7 +41,7 @@ public class BrickTile : Tile
                 // --numberOfActivation;
                 // if (numberOfActivation == 0)
                 // {
-                tilemap.SetTile(cellPos, usedTile);
+                tilemap.SetTile(cellPos, null);
                 // }
                 break;
             
@@ -53,7 +53,7 @@ public class BrickTile : Tile
                 // --numberOfActivation;
                 // if (numberOfActivation == 0)
                 // {
-                tilemap.SetTile(cellPos, usedTile);
+                tilemap.SetTile(cellPos, null);
                 // }
                 break;
             
@@ -65,7 +65,7 @@ public class BrickTile : Tile
                 // --numberOfActivation;
                 // if (numberOfActivation == 0)
                 // {
-                tilemap.SetTile(cellPos, usedTile);
+                tilemap.SetTile(cellPos, null);
                 // }
                 break;
             
@@ -76,13 +76,14 @@ public class BrickTile : Tile
                 --numberOfActivation;
                 if (numberOfActivation == 0)
                 {
-                    tilemap.SetTile(cellPos, usedTile);
+                    tilemap.SetTile(cellPos, null);
                 }
                 
                 break;
             
             case Type.Breakable:
                 tilemap.SetTile(cellPos, null);
+                visualTilemap.SetTile(cellPos, null);
                 break;
             
             case Type.Unbreakable:
