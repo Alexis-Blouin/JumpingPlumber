@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
+    [SerializeField] private float flagPoleSpeed = 4.0f;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float jumpForceEnemy = 2.0f;
     [SerializeField] private float jumpForceDead = 4.0f;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     private bool _isBig = false;
     private bool _isFire = false;
     private bool _isAlive = true;
+    private bool _isOnFlag = false;
     private float _smallBoxColliderHeight = 1.0f;
     private float _shrinkDownForce = 500.0f;
     private float _bigBoxColliderHeight = 2.0f;
@@ -54,7 +56,7 @@ public class Player : MonoBehaviour
     {
         _moveInput = context.ReadValue<float>();
         _animator.SetBool("IsMoving", _moveInput is > 0 or < 0);
-        if (_moveInput != 0.0f && _isAlive)
+        if (_moveInput != 0.0f && _isAlive && !_isOnFlag)
         {
             if (_goingRight && _moveInput < 0.0f)
             {
@@ -109,11 +111,22 @@ public class Player : MonoBehaviour
         _animator.SetBool("IsJumping", !_isGrounded);
 
         _CheckHeadHit();
+
+        if (_isOnFlag)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - flagPoleSpeed * Time.deltaTime, transform.position.z);
+            if (_isGrounded)
+            {
+                _isOnFlag = false;
+                _rb.gravityScale = 3;
+                _animator.SetBool("IsOnFlagPole", false);
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        if (_isAlive)
+        if (_isAlive && !_isOnFlag)
         {
             _rb.linearVelocity = new Vector2(_moveInput * speed, _rb.linearVelocity.y);
         }
@@ -159,6 +172,17 @@ public class Player : MonoBehaviour
             }
             
             Destroy(other.gameObject); // Destroy the item after the player used it
+        } else if (other.gameObject.CompareTag("Flag"))
+        {
+            _isOnFlag = true;
+            _rb.gravityScale = 0;
+            _rb.linearVelocity = Vector2.zero;
+            _animator.SetBool("IsOnFlagPole", true);
+            
+            // Remove pole's collider
+            other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            // Make the flag go down with the player
+            other.gameObject.GetComponentInParent<FlagPole>().canGoDown = true;
         }
     }
 
