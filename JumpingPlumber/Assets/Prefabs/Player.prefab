@@ -12,9 +12,13 @@ GameObject:
   - component: {fileID: 8303745626552255190}
   - component: {fileID: 5298253302390999351}
   - component: {fileID: 3891708298540653424}
-  - component: {fileID: 9180916172105683894}
   - component: {fileID: 709885376514105773}
   - component: {fileID: 1465317743063832998}
+  - component: {fileID: 6021665874362413429}
+  - component: {fileID: 5931987331029876235}
+  - component: {fileID: 3991950770815348883}
+  - component: {fileID: 2370601709914731712}
+  - component: {fileID: 8256513073685262092}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -83,7 +87,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -887186179
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 5062715548122799639, guid: 168d5c6df0843a94d9e90f273c1edc99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -168,31 +172,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &9180916172105683894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900892364867242350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af703d96a7da13c43ab57dba5f3e85de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  speed: 8
-  jumpForce: 16
-  jumpForceEnemy: 8
-  jumpForceDead: 12
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  brickLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  invulnarabilityTime: 2
-  fireballPrefab: {fileID: 7639788394541132412, guid: 2560a883f1dfa3941a07a5671a999eaa, type: 3}
-  visualTilemap: {fileID: 0}
 --- !u!114 &709885376514105773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,7 +199,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9180916172105683894}
+      - m_Target: {fileID: 3991950770815348883}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -236,7 +215,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Move[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9180916172105683894}
+      - m_Target: {fileID: 3991950770815348883}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnJump
         m_Mode: 0
@@ -252,8 +231,8 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Jump[/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9180916172105683894}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+      - m_Target: {fileID: 3991950770815348883}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnFireball
         m_Mode: 0
         m_Arguments:
@@ -293,3 +272,80 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6021665874362413429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900892364867242350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da86caf1eca90545884511e3927161c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionHandler
+--- !u!114 &5931987331029876235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900892364867242350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2320075627a33914387113298374e00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  fireballPrefab: {fileID: 7639788394541132412, guid: 2560a883f1dfa3941a07a5671a999eaa, type: 3}
+--- !u!114 &3991950770815348883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900892364867242350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8067e24324f9f234589e1fb14856d0f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  speed: 8
+  flagPoleSpeed: 4
+  jumpForce: 16
+  jumpForceEnemy: 8
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  brickLayer:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!114 &2370601709914731712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900892364867242350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209f57d15bf86b4d9a19653613fe598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  jumpForceDead: 12
+  invulnarabilityTime: 2
+--- !u!114 &8256513073685262092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900892364867242350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd1da9cd7bdb0342a0bd6e962c9d4b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTileInteraction
+  brickLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  visualTilemap: {fileID: 0}
