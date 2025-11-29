@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac71e6d08d8cd24fb31234d195d969e, type: 3}
   m_Name: BirckLifeTile
   m_EditorClassIdentifier: Assembly-CSharp::BrickTile
-  m_Sprite: {fileID: 7810949417647135802, guid: 6acc3cc9a4173b644bb11df9d60a0818, type: 3}
+  m_Sprite: {fileID: -633109172, guid: 168d5c6df0843a94d9e90f273c1edc99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -35,6 +35,6 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 1
   type: 1
-  usedTile: {fileID: 11400000, guid: 79a34c5efeb61b247a89006c4d2c085f, type: 2}
+  usedTile: {fileID: 11400000, guid: b75302ad290b8414f91cd336c34e6aef, type: 2}
   itemPrefab: {fileID: 6921359675350153659, guid: 50d6bf5c78121514b8c965fa66ada3c3, type: 3}
   numberOfActivation: 1

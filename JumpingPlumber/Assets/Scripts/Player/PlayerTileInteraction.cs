@@ -9,10 +9,14 @@ public class PlayerTileInteraction : MonoBehaviour
     private Rigidbody2D _rb;
     private BoxCollider2D _boxCollider;
     
+    private PlayerStats _playerStats;
+    
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
+        
+        _playerStats = GetComponent<PlayerStats>();
     }
 
     void Update()
@@ -49,9 +53,20 @@ public class PlayerTileInteraction : MonoBehaviour
                 if (tile is BrickTile brick)
                 {
                     brick.OnHit(cellPos, tilemap, visualTilemap);
+                    HandleBrickReward(brick);
                     _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0.0f);
                 }
             }
+        }
+    }
+
+    private void HandleBrickReward(BrickTile brick)
+    {
+        switch (brick.type)
+        {
+            case BrickTile.Type.Coin:
+                _playerStats.AddGold(1);
+                break;
         }
     }
 }

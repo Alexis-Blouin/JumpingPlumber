@@ -38,11 +38,7 @@ public class BrickTile : Tile
                 position = new Vector3(worldPosition.x, worldPosition.y + 1.5f, worldPosition.z);
                 Instantiate(itemPrefab, position, Quaternion.identity);
 
-                // --numberOfActivation;
-                // if (numberOfActivation == 0)
-                // {
                 tilemap.SetTile(cellPos, null);
-                // }
                 break;
             
             case Type.LifeMushroom:
@@ -50,11 +46,7 @@ public class BrickTile : Tile
                 position = new Vector3(worldPosition.x, worldPosition.y + 1.5f, worldPosition.z);
                 Instantiate(itemPrefab, position, Quaternion.identity);
 
-                // --numberOfActivation;
-                // if (numberOfActivation == 0)
-                // {
                 tilemap.SetTile(cellPos, null);
-                // }
                 break;
             
             case Type.FireFlower:
@@ -62,23 +54,20 @@ public class BrickTile : Tile
                 position = new Vector3(worldPosition.x + 0.5f, worldPosition.y + 1.5f, worldPosition.z);
                 Instantiate(itemPrefab, position, Quaternion.identity);
 
-                // --numberOfActivation;
-                // if (numberOfActivation == 0)
-                // {
                 tilemap.SetTile(cellPos, null);
-                // }
                 break;
             
             case Type.Star:
                 break;
             
             case Type.Coin:
-                --numberOfActivation;
-                if (numberOfActivation == 0)
-                {
-                    tilemap.SetTile(cellPos, null);
-                }
+                worldPosition = tilemap.CellToWorld(cellPos);
+                position = new Vector3(worldPosition.x + 0.5f, worldPosition.y + 1.5f, worldPosition.z);
+                GameObject coin = Instantiate(itemPrefab, position, Quaternion.identity);
+                Animator coinAnimator = coin.GetComponent<Animator>();
+                coinAnimator.SetTrigger("End");
                 
+                tilemap.SetTile(cellPos, null);
                 break;
             
             case Type.Breakable:

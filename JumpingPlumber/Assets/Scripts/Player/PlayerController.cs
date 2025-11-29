@@ -21,8 +21,6 @@ public class PlayerController : MonoBehaviour
 
     private bool _isOnFlag = false;
     private bool _isGrounded;
-
-    private bool _isInvulnerable = false;
     
     private PlayerCombat _playerCombat;
     private PlayerHealth _playerHealth;

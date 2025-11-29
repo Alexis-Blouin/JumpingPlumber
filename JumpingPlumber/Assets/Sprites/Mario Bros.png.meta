@@ -4910,7 +4910,7 @@ TextureImporter:
         serializedVersion: 2
         x: 103
         y: 48
-        width: 14
+        width: 3
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -5168,6 +5168,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Mario Bros_203
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 48
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d18bd658c438d5469150b643bbb0a5f
+      internalID: 68820264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -5299,6 +5321,7 @@ TextureImporter:
       Mario Bros_200: 2755242791674565599
       Mario Bros_201: -6239586084261366271
       Mario Bros_202: -633109172
+      Mario Bros_203: 68820264
       Mario Bros_21: 7324892749936935075
       Mario Bros_22: -857131329771131732
       Mario Bros_23: 7261389471443212670
