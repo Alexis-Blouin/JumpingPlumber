@@ -17,18 +17,25 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            // Gets the first contact
-            ContactPoint2D contact = other.contacts[0];
-
-            if (contact.normal.y > 0.5f)
+            if (_playerHealth.IsStar())
             {
-                enemy.JumpedOn();
-                
-                _playerController.JumpOnEnemy();
+                enemy.Burn();
             }
             else
             {
-                _playerHealth.GetHit();
+                // Gets the first contact
+                ContactPoint2D contact = other.contacts[0];
+
+                if (contact.normal.y > 0.5f)
+                {
+                    enemy.JumpedOn();
+                
+                    _playerController.JumpOnEnemy();
+                }
+                else
+                {
+                    _playerHealth.GetHit();
+                }
             }
         } else if (other.gameObject.TryGetComponent<Item>(out Item item))
         {

@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float jumpForceDead = 12.0f;
     [SerializeField] private float invulnarabilityTime = 2.0f;
+    [SerializeField] private float starTime = 10.0f;
     
     private Rigidbody2D _rb;
     private BoxCollider2D _boxCollider;
@@ -18,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     private float _shrinkDownForce = 500.0f;
     private float _bigBoxColliderHeight = 2.0f;
     private bool _isInvulnerable = false;
+    private bool _isStar = false;
     
     private int _playerLayer;
     private int _enemyLayer;
@@ -93,6 +95,11 @@ public class PlayerHealth : MonoBehaviour
         _animator.SetBool("IsFire", _isFire);
     }
 
+    public void AddStar()
+    {
+        StartCoroutine(BecomeStar());
+    }
+
     private IEnumerator BecomeInvulnerable()
     {
         _isInvulnerable = true;
@@ -104,6 +111,18 @@ public class PlayerHealth : MonoBehaviour
         // Re-enable collisions
         Physics2D.IgnoreLayerCollision(_playerLayer, _enemyLayer, false);
         _isInvulnerable = false;
+        _isStar = false;
+    }
+    
+    private IEnumerator BecomeStar()
+    {
+        _isStar = true;
+        
+        yield return new WaitForSeconds(starTime);
+        
+        // Re-enable collisions
+        Physics2D.IgnoreLayerCollision(_playerLayer, _enemyLayer, false);
+        _isStar = false;
     }
 
     public bool IsAlive()
@@ -114,5 +133,10 @@ public class PlayerHealth : MonoBehaviour
     public bool IsFire()
     {
         return _isFire;
+    }
+
+    public bool IsStar()
+    {
+        return _isStar;
     }
 }
