@@ -12,6 +12,14 @@ public class PlayerStats : MonoBehaviour
         // Notify UI
         OnGoldChanged?.Invoke(gold);
     }
+    
+    public void AddScore(int amount)
+    {
+        score += amount;
+        // Notify UI
+        OnScoreChanged?.Invoke(gold);
+    }
 
     public event Action<int> OnGoldChanged;
+    public event Action<int> OnScoreChanged;
 }

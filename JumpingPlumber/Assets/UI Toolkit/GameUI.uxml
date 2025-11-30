@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Gold" style="flex-grow: 0; align-self: flex-start; justify-content: flex-start;">
+        <ui:Label text="Coins" name="GoldLabel" style="font-size: 24px;" />
+        <ui:Label text="0" name="GoldLabelCount" style="font-size: 24px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Lives" style="flex-grow: 0; align-self: flex-start;">
+        <ui:Label text="Lives" name="LivesLabel" style="font-size: 24px;" />
+        <ui:Label text="0" name="LivesLabelCount" style="font-size: 24px;" />
+    </ui:VisualElement>
+</ui:UXML>
